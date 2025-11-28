@@ -1,0 +1,29 @@
+data:
+  class_path: modules.datamodule.PUCIFAR10DataModule
+  init_args:
+    pn_wrap_kwargs:
+      positive_labels: nil
+    pu_wrap_kwargs:
+      positive_count: 1_000
+      unlabeled_count: 50_000
+    train_dataloader_kwargs:
+      batch_size: 500
+    val_dataloader_kwargs:
+      batch_size: 10_000
+model:
+  class_path: modules.system.nnPUSystem
+  init_args:
+    model: modules.model.TinyCNN
+    cost_function: modules.loss.LogisticCostFunction
+    positive_threshold: 0.5
+optimizer:
+  class_path: torch.optim.Adam
+  init_args:
+    lr: 1e-5
+    weight_decay: 5e-3
+trainer:
+  logger:
+    init_args:
+      experiment: imbalanced
+      repo: results/imbalanced/
+  max_epochs: 200

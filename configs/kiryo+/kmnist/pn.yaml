@@ -1,0 +1,27 @@
+data:
+  class_path: modules.datamodule.PNKMNISTDataModule
+  init_args:
+    pn_wrap_kwargs:
+      positive_labels: [0, 2, 4, 5, 6]
+    pn_resample_kwargs:
+      dataset_length: 1_000
+    train_dataloader_kwargs:
+      batch_size: 1_000
+    val_dataloader_kwargs:
+      batch_size: 10_000
+model:
+  class_path: modules.system.PNSystem
+  init_args:
+    model: modules.model.KiryoMLP
+    cost_function: modules.loss.SigmoidCostFunction
+optimizer:
+  class_path: torch.optim.Adam
+  init_args:
+    lr: 1e-4
+    weight_decay: 5e-3
+trainer:
+  logger:
+    init_args:
+      repo: results/kiryo+/
+      experiment: kiryo+
+  max_epochs: 200
